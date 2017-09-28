@@ -1,7 +1,7 @@
 version: 2
 jobs:
     build:
-        working_directory: ~/spt-maven-parent
+        working_directory: ~/spt-java-parent
         docker:
             - image: circleci/openjdk:8-jdk
         steps:
@@ -19,7 +19,7 @@ jobs:
             - run: |
                 git-config-user "${GIT_USERNAME}" ${GIT_EMAIL}
             - checkout:
-                path: ~/spt-maven-parent
+                path: ~/spt-java-parent
             
             # dependencies
             - restore_cache:
@@ -36,11 +36,6 @@ jobs:
             # test
             - run: |
                 mvn-test
-                if [[ -v RELEASE_VERSION ]]; then
-                    mvn-release-prepare ${RELEASE_VERSION}
-                    mvn-release-perform \
-                        -P gpg -Darguments=-Dgpg.passphrase=${GPG_PASSWORD}
-                    git-flow-release-finish ${CIRCLE_BRANCH}
-                else
-                    mvn-deploy
-                fi
+            - run: |
+                bash .circleci/mvn-deploy.sh \
+                    ${CIRCLE_BRANCH} ${GPG_PASSWORD} ${VERSION:-}

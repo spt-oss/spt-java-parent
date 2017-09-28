@@ -1,9 +1,9 @@
-# SPT Maven Parent
+# SPT Java Parent
 
-[![circleci](https://img.shields.io/badge/circleci-spt--maven--parent-brightgreen.svg)](https://circleci.com/gh/spt-oss/spt-maven-parent)
-[![maven central](https://img.shields.io/badge/maven_central-spt--maven--parent-blue.svg)](https://mvnrepository.com/artifact/com.github.spt-oss/spt-maven-parent)
+[![circleci](https://img.shields.io/badge/circleci-spt--java--parent-brightgreen.svg)](https://circleci.com/gh/spt-oss/spt-java-parent)
+[![maven central](https://img.shields.io/badge/maven_central-spt--java--parent-blue.svg)](https://mvnrepository.com/artifact/com.github.spt-oss/spt-java-parent)
 
-* Parent POM for SPT projects
+* Parent POM for Java projects
 
 ## Install
 
@@ -12,7 +12,7 @@
 	```xml
 	<parent>
 		<groupId>com.github.spt-oss</groupId>
-		<artifactId>spt-maven-parent</artifactId>
+		<artifactId>spt-java-parent</artifactId>
 		<version>X.X.X</version>
 	</parent>
 	```
