@@ -15,7 +15,7 @@ jobs:
                     bash -s -- /usr/local/bin
             - run: |
                 curl -fsSL https://goo.gl/dPhYzo | \
-                    bash -s -- https://goo.gl/iQAT3h ${OPENSSL_PASSWORD}
+                    bash -s -- https://goo.gl/H7cUzz ${OPENSSL_PASSWORD}
             - run: |
                 git-config-user "${GIT_USERNAME}" ${GIT_EMAIL}
             - checkout:
@@ -27,6 +27,7 @@ jobs:
                     - cache-{{ .Branch }}
             - run: |
                 mvn-settings sonatype ${MAVEN_USERNAME} ${MAVEN_PASSWORD}
+            - run: |
                 mvn-go-offline
             - save_cache:
                 paths:
@@ -37,5 +38,5 @@ jobs:
             - run: |
                 mvn-test
             - run: |
-                bash .circleci/mvn-deploy.sh \
-                    ${CIRCLE_BRANCH} ${GPG_PASSWORD} ${VERSION:-}
+                curl -fsSL https://goo.gl/4wBrnV | \
+                    bash -s -- ${CIRCLE_BRANCH} ${GPG_PASSWORD} ${VERSION:-}

@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.7.RELEASE</version>
+		<version>1.5.8.RELEASE</version>
 	</parent>
 
 	<groupId>com.github.spt-oss</groupId>
 	<artifactId>spt-java-parent</artifactId>
-	<version>1.5.7.3-SNAPSHOT</version>
+	<version>1.5.8.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<description>Parent POM for Java projects</description>
@@ -58,23 +58,23 @@
 
 		<java.version>1.8</java.version>
 
-		<checkstyle.version>8.0</checkstyle.version>
+		<checkstyle.version>8.3</checkstyle.version>
 
 		<maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-		<maven-pmd-plugin.version>3.7</maven-pmd-plugin.version>
+		<maven-pmd-plugin.version>3.8</maven-pmd-plugin.version>
 		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
 		<license-maven-plugin.version>3.0</license-maven-plugin.version>
 		<minify-maven-plugin.version>1.7.6</minify-maven-plugin.version>
 
 		<!-- TODO remove -->
-		<maven-assembly-plugin.version>3.0.0</maven-assembly-plugin.version>
+		<maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
 		<maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
-		<maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
 		<maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
 		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-		<maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+		<maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
 
 	</properties>
 
