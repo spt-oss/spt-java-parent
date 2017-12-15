@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.8.RELEASE</version>
+		<version>2.0.2.RELEASE</version>
 	</parent>
 
 	<groupId>com.github.spt-oss</groupId>
 	<artifactId>spt-java-parent</artifactId>
-	<version>1.5.8.1-SNAPSHOT</version>
+	<version>2.0.2.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<description>Parent POM for Java projects</description>
@@ -56,27 +56,32 @@
 
 	<properties>
 
-		<java.version>1.8</java.version>
+		<checkstyle.version>8.10</checkstyle.version>
 
-		<checkstyle.version>8.3</checkstyle.version>
+		<!-- TODO remove -->
+		<usertype.version>6.0.1.GA</usertype.version>
 
-		<maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+		<!-- TODO remove -->
+		<lombok.version>1.16.18</lombok.version>
+
+		<maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
 		<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-		<maven-pmd-plugin.version>3.8</maven-pmd-plugin.version>
+		<maven-pmd-plugin.version>3.9.0</maven-pmd-plugin.version>
 		<maven-release-plugin.version>2.5.3</maven-release-plugin.version>
 		<license-maven-plugin.version>3.0</license-maven-plugin.version>
 		<minify-maven-plugin.version>1.7.6</minify-maven-plugin.version>
 
-		<!-- TODO remove -->
-		<maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
-		<maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
-		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-		<maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-		<maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-		<maven-surefire-plugin.version>2.20.1</maven-surefire-plugin.version>
-
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jadira.usertype</groupId>
+				<artifactId>usertype.core</artifactId>
+				<version>${usertype.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<dependencies>
 		<dependency>
@@ -95,6 +100,10 @@
 			<id>sonatype</id>
 			<url>https://oss.sonatype.org/content/groups/staging</url>
 		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<url>https://repo.spring.io/libs-milestone</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
@@ -106,6 +115,10 @@
 			<id>sonatype</id>
 			<url>https://oss.sonatype.org/content/groups/staging</url>
 		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<url>https://repo.spring.io/libs-milestone</url>
+		</pluginRepository>
 	</pluginRepositories>
 
 	<build>
@@ -116,15 +129,50 @@
 				<!-- Core -->
 
 				<plugin>
+					<groupId>org.jetbrains.kotlin</groupId>
+					<artifactId>kotlin-maven-plugin</artifactId>
+					<configuration>
+						<sourceDirs>
+							<sourceDir>${project.basedir}/src/main/java</sourceDir>
+						</sourceDirs>
+					</configuration>
+				</plugin>
+
+				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
+					<executions>
+						<execution>
+							<id>default-compile</id>
+							<phase>none</phase>
+						</execution>
+						<execution>
+							<id>default-testCompile</id>
+							<phase>none</phase>
+						</execution>
+						<execution>
+							<id>java-compile</id>
+							<phase>compile</phase>
+							<goals>
+								<goal>compile</goal>
+							</goals>
+						</execution>
+						<execution>
+							<id>java-test-compile</id>
+							<phase>test-compile</phase>
+							<goals>
+								<goal>testCompile</goal>
+							</goals>
+						</execution>
+					</executions>
 					<configuration>
-						<compilerArgs>
-							<arg>-parameters</arg>
-							<arg>-Xlint:all,-deprecation,-processing</arg>
-							<arg>-Werror</arg>
-						</compilerArgs>
+						<parameters>true</parameters>
+						<failOnWarning>true</failOnWarning>
 						<showWarnings>true</showWarnings>
+						<fork>true</fork>
+						<compilerArgs>
+							<arg>-Xlint:all,-deprecation,-processing</arg>
+						</compilerArgs>
 					</configuration>
 				</plugin>
 
@@ -136,9 +184,6 @@
 					<configuration>
 						<archive>
 							<addMavenDescriptor>false</addMavenDescriptor>
-							<manifest>
-								<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							</manifest>
 							<manifestEntries>
 								<Built-By>Maven</Built-By>
 								<Build-Jdk>${java.version}</Build-Jdk>
@@ -146,6 +191,7 @@
 						</archive>
 						<excludes>
 							<exclude>**/.git*</exclude>
+							<exclude>**/*.kt</exclude>
 						</excludes>
 					</configuration>
 				</plugin>
@@ -189,6 +235,7 @@
 						</execution>
 					</executions>
 					<configuration>
+						<includeTestSourceDirectory>true</includeTestSourceDirectory>
 						<violationSeverity>warning</violationSeverity>
 					</configuration>
 					<dependencies>
@@ -331,7 +378,7 @@ limitations under the License.</inlineHeader>
 						</jsSourceExcludes>
 						<nosuffix>true</nosuffix>
 						<skipMerge>true</skipMerge>
-						<webappSourceDir>${basedir}/src/main/resources/webapp</webappSourceDir>
+						<webappSourceDir>${project.basedir}/src/main/resources/webapp</webappSourceDir>
 						<webappTargetDir>${project.build.directory}/classes/webapp</webappTargetDir>
 					</configuration>
 				</plugin>

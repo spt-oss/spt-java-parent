@@ -7,15 +7,12 @@ jobs:
         steps:
             
             # checkout
-            - add_ssh_keys:
-                fingerprints:
-                    - 00:d2:17:7c:fd:6d:ea:ff:ec:35:e6:e9:10:2d:03:77
             - run: |
-                curl -fsSL https://goo.gl/PcfcFG | \
+                curl -fsSL https://git.io/vpRJr | \
                     bash -s -- /usr/local/bin
             - run: |
-                curl -fsSL https://goo.gl/dPhYzo | \
-                    bash -s -- https://goo.gl/H7cUzz ${OPENSSL_PASSWORD}
+                curl -fsSL https://git.io/vpDIq | \
+                    bash -s -- https://git.io/vpDY5 ${OPENSSL_PASSWORD}
             - run: |
                 git-config-user "${GIT_USERNAME}" ${GIT_EMAIL}
             - checkout:
@@ -38,5 +35,5 @@ jobs:
             - run: |
                 mvn-test
             - run: |
-                curl -fsSL https://goo.gl/4wBrnV | \
+                curl -fsSL https://git.io/vpDY9 | \
                     bash -s -- ${CIRCLE_BRANCH} ${GPG_PASSWORD} ${VERSION:-}
